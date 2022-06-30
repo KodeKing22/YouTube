@@ -13,7 +13,7 @@ const VideoPage = () => {
       "https://www.googleapis.com/youtube/v3/search?q=cars&key=AIzaSyBDNN1a6qBBAFG-gUKkmaaGPls7Eo7CCIo"
     );
     setCarVideos(response.data);
-    console.log(response.data)
+    
   }
   return(
     <h1> Welcome to the Video Page!</h1>
