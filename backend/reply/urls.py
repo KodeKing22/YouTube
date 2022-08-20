@@ -5,5 +5,5 @@ from reply import views
 
 urlpatterns = [
     path('', views.user_reply),
-    path('all/', views.get_all_replies),
+    path('all/<str:comment_id>', views.get_all_replies),
 ]

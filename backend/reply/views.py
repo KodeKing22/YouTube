@@ -8,9 +8,9 @@ from .serializers import ReplySerializer
 
 # Create your views here.
 @api_view(['GET'])
-@permission_classes([AllowAny])
-def get_all_replies(request):
-    comment = Reply.objects.all()
+@permission_classes([IsAuthenticated])
+def get_all_replies(request, comment_id):
+    comment = Reply.objects.filter(comment_id=comment_id)
     serializer = ReplySerializer(comment, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
