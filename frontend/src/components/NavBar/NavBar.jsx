@@ -20,7 +20,9 @@ const Navbar = () => {
             <button onClick={logoutUser}>Logout</button>
           ) : (
             <button onClick={() => navigate("/login")}>Login</button>
-          )}
+            )}
+            <button onClick={() => navigate("/videopage")}>Video Page</button>
+            <button onClick={() => navigate("/searchvideos")}>Search Page</button>
         </li>
       </ul>
     </div>
