@@ -1,22 +1,33 @@
-import axios from 'axios';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
 
-import useAuth from '../../hooks/useAuth';
-import useCustomForm from '../../hooks/useCustomForm';
+const CommentForm = ({ addComment }) => {
+    const [commentText, setCommentText] = useState("");
 
-let defaultValues = {
-    comment: ""
-}
+    async function handleAddComment(event) {
+        event.preventDefault();
+        debugger;
+        let newEntry = {
+            text: commentText,
+        };
+        await addComment(newEntry);
+    }
 
-const CommentForm = () => {
-    // const [user, token] = useAuth()
-    // const navigate = useNavigate()
-    // const  [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues)
-
-    // async function postComment(){
-    //     let response = await axios.post("")
-    // }
-}
+    return (
+        <form
+            className="comment-form"
+            onSubmit={(event) => handleAddComment(event)}
+        >
+            <input
+                className="comment-input"
+                value={commentText}
+                type="text"
+                onChange={(event) => setCommentText(event.target.value)}
+            />
+            <button className="comment-form-button" type="submit">
+                Add Comment
+            </button>
+        </form>
+    );
+};
 
 export default CommentForm;
