@@ -16,13 +16,13 @@ const Mapping = ({ array }) => {
                                         src={item.snippet.thumbnails.high.url}
                                         alt="video thumbnail"
                                     />
-                                    <h3 className="video-list-info">
+                                    {/* <h3 className="video-list-info">
                                         {item.snippet.title}
                                     </h3>
                                     <hr />
                                     <h4 className="video-list-info description">
                                         {item.snippet.description}
-                                    </h4>
+                                    </h4> */}
                                 </div>
                             </Link>
                         </li>

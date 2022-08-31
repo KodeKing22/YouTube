@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-import { googleApiKey } from "../keys";
+// import { googleApiKey } from "../keys";
 
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Mapping from '../../components/Mapping/mapping';
@@ -11,6 +11,7 @@ const SearchPage = () => {
     const [videoSearchData, setVideoSearchData] = useState([]);
     const [searchCriteria, setSearchCriteria] = useState("cats");
 
+    let googleApiKey="AIzaSyCDwnOQTOjMwjJzRxeKjOJ4xoOWRO5TmaQ"
     useEffect(() => {
         getVideosSearch();
     }, []);
@@ -18,7 +19,7 @@ const SearchPage = () => {
     async function getVideosSearch() {
         try {
             let response = await axios.get(
-                "https://www.googleapis.com/youtube/v3/search?q=" +
+                "https://www.googleapis.com/youtube/v3/search?q" +
                     searchCriteria +
                     "&key=" +
                     googleApiKey +
