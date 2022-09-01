@@ -8,7 +8,7 @@ const SearchBar = ({ setState }) => {
                 type="text"
                 onChange={(event) => setState(event.target.value)}
             />
-            <button type="submit">Search</button>
+            
         </form>
     );
 };

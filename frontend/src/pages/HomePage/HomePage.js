@@ -1,9 +1,11 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import { Link } from "react-router-dom"; 
+import { useParams } from "react-router-dom"; 
 
 import axios from "axios";
+import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
+import RelatedVideos from '../../components/RelatedVideos/RelatedVideos'
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -13,6 +15,8 @@ const HomePage = () => {
   const [cars, setCars] = useState([]);
   const [videoSearchResults, setVideoSearchResults] = useState([])
   const [selectedVideoId, setSelectedVideoID] = useState('')
+  const [similarVideos, setSimilarVideos] = useState('')
+  const { videoId } = useParams();
   console.log(user);
   console.log(token);
 
@@ -36,7 +40,7 @@ const HomePage = () => {
     const videoSearch = async () => {
       try{
         let response = await axios.get("https://www.googleapis.com/youtube/v3/search?part=snippet&q=basketball&key=AIzaSyCDwnOQTOjMwjJzRxeKjOJ4xoOWRO5TmaQ&type=video")
-        console.log(response.data.item)
+        
         setVideoSearchResults(response.data.item)
       } catch (error) {
         console.log(error.response.data);
@@ -44,22 +48,35 @@ const HomePage = () => {
       };
       videoSearch();
   },[]);
+  useEffect(() => {
+    relatedVideoSearch(videoId);
+  },[videoId]);
+    const relatedVideoSearch = async (relatedVideoId) => {
+      try {
+        let response = await axios.get(`https://www.googleapis.com/youtube/v3/search`, {
+      params: {
+        type: 'video',
+        relatedVideoId: relatedVideoId,
+        key: process.env.REACT_APP_YT_API_KEY,
+        part: 'snippet',
+      }
+        });
+        setSimilarVideos(response.data.items);
+      } catch (error) {
+        console.log(error.message);
+      }
+      };
+    
 
 
   return (
     <div className="container">
       <h1>Home Page for {user.username}!</h1>
-      {console.log('videoSearchResults in render:',videoSearchResults)}
-      {/* <Link to="/addvideo">Add Video!</Link> */}
-      <iframe id="ytplayer" type="text/html" width="640" height="360"
-  src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=http://example.com"
-  frameborder="0"></iframe>
-      {cars &&
-        cars.map((car) => (
-          <p key={car.id}>
-            {car.year} {car.model} {car.make}
-          </p>
-        ))}
+      {/* {console.log('videoSearchResults in render:',videoSearchResults)} */}
+      <VideoPlayer videoId={videoId}/>
+      <RelatedVideos videos={similarVideos}/>
+      <div></div>
+     
     </div>
   );
 };

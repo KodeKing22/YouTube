@@ -3,7 +3,7 @@ import "./Footer.css";
 const Footer = () => {
   return (
     <footer>
-      <p>KodeKing22</p>{" "}
+      <p></p>{" "}
     </footer>
   );
 };

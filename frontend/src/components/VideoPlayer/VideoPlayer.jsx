@@ -1,12 +1,12 @@
-const VideoPlayer = (props) => {
-    const srrc=`https://www.youtube.com/embed/${props.videoId}`
+const VideoPlayer = (videoId) => {
+    // const srrc=`https://www.youtube.com/embed/${props.videoId}`
 
     return ( 
-        <div>
+        
              <iframe id="ytplayer" type="text/html" width="640" height="360"
-    src={srrc}
+    src={`https://www.youtube.com/embed/${videoId}?autoplay=1&origin=http://example.com`}
     frameborder="0"></iframe>
-        </div>
+        
      );
 }
  
