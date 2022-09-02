@@ -1,5 +1,5 @@
 import React from "react";
-import useVideoPush from "../../hooks/useVideoPush";
+import useVideoPush from "../../hooks/VIdeoPush";
 
 const RelatedVideos = ({ videos, size }) => {
   const { handleVideoPush } = useVideoPush();
