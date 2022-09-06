@@ -14,6 +14,7 @@ const Navbar = () => {
           <Link to="/" style={{ textDecoration: "none", color: "white" }}>
             <b>YouTube Clone</b>
           </Link>
+          <h1 className="userhomepage">Home Page for {user.username}!</h1>
         </li>
         <li>
           {user ? (

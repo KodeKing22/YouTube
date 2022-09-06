@@ -6,13 +6,14 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
 import RelatedVideos from '../../components/RelatedVideos/RelatedVideos'
+import CommentList from "../../components/CommentList/CommentList";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
   // The "token" value is the JWT token that you will send in the header of any request requiring authentication
   //TODO: Add an AddCars Page to add a car for a logged in user's garage
   const [user, token] = useAuth();
-  const [cars, setCars] = useState([]);
+  const [videos, setVideos] = useState([]);
   const [videoSearchResults, setVideoSearchResults] = useState([])
   const [selectedVideoId, setSelectedVideoID] = useState('')
   const [similarVideos, setSimilarVideos] = useState('')
@@ -21,43 +22,55 @@ const HomePage = () => {
   console.log(token);
 
   useEffect(() => {
-    const fetchCars = async () => {
+    const fetchVideos = async () => {
       try {
-        let response = await axios.get("http://127.0.0.1:8000/api/cars/", {
-          headers: {
+        let response = await axios.get("https://www.googleapis.com/youtube/v3/search?", {
+            params: {
             Authorization: "Bearer " + token,
+            type: 'video',
+            videoSearchResults: ['basketball'],
+            key: "AIzaSyCDwnOQTOjMwjJzRxeKjOJ4xoOWRO5TmaQ",
+            part: 'snippet',
           },
         });
-        setCars(response.data);
+        setVideos(response.data);
       } catch (error) {
         console.log(error.response.data);
       }
     };
-    fetchCars();
+    fetchVideos();
   }, [token]);
 
   useEffect(() => {
+    videoSearch(videoId);
+  },[videoId]);
     const videoSearch = async () => {
       try{
-        let response = await axios.get("https://www.googleapis.com/youtube/v3/search?part=snippet&q=basketball&key=AIzaSyCDwnOQTOjMwjJzRxeKjOJ4xoOWRO5TmaQ&type=video")
+        let response = await axios.get("https://www.googleapis.com/youtube/v3/search?",{
+          params: {
+            type: 'video',
+            videoSearchResults: [''],
+            key: "AIzaSyCDwnOQTOjMwjJzRxeKjOJ4xoOWRO5TmaQ",
+            part: 'snippet',
+          }
+        })
         
         setVideoSearchResults(response.data.item)
       } catch (error) {
         console.log(error.response.data);
       }
       };
-      videoSearch();
-  },[]);
+  
   useEffect(() => {
     relatedVideoSearch(videoId);
   },[videoId]);
-    const relatedVideoSearch = async (relatedVideoId) => {
+    const relatedVideoSearch = async (similarVideos) => {
       try {
-        let response = await axios.get(`https://www.googleapis.com/youtube/v3/search`, {
+        let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?`, {
       params: {
         type: 'video',
-        relatedVideoId: relatedVideoId,
-        key: process.env.REACT_APP_YT_API_KEY,
+        similarVideos: similarVideos,
+        key: "AIzaSyCDwnOQTOjMwjJzRxeKjOJ4xoOWRO5TmaQ",
         part: 'snippet',
       }
         });
@@ -70,12 +83,18 @@ const HomePage = () => {
 
 
   return (
-    <div className="container">
-      <h1>Home Page for {user.username}!</h1>
+    <div className="wrapper">
+     
       {/* {console.log('videoSearchResults in render:',videoSearchResults)} */}
-      <VideoPlayer videoId={videoId}/>
+      <div className="videoplayer">
+        <VideoPlayer videoId={videoId}/>
+      </div>
+      <div className="relatedvideos">
       <RelatedVideos videos={similarVideos}/>
-      <div></div>
+      </div>
+      <div className="commentList">
+        <CommentList videoId={videoId}/>
+      </div>
      
     </div>
   );

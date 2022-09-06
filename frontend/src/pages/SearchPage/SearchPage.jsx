@@ -21,11 +21,15 @@ const SearchPage = () => {
     async function getVideosSearch() {
         try {
             let response = await axios.get(
-                "https://www.googleapis.com/youtube/v3/search?q" +
-                    searchCriteria +
-                    "&key=" +
-                    googleApiKey +
-                    "&type=video&part=snippet&maxResults=5"
+                "https://www.googleapis.com/youtube/v3/search?q", {
+                    params: {
+                        type: 'video',
+                        videoSearchResults: [''],
+                        key: "AIzaSyCDwnOQTOjMwjJzRxeKjOJ4xoOWRO5TmaQ",
+                        part: 'snippet',
+                      }
+                }
+                  
             );
             setVideoSearchData(response.data.items);
         } catch (error) {

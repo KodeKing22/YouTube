@@ -23,10 +23,10 @@ const CommentForm = ({ addComment }) => {
                 className="comment-input"
                 value={commentText}
                 type="text"
-                onChange={(event) => setCommentText(event.target.value)}
+                
             />
             </label>
-            <button className="comment-form-button" type="submit">
+            <button className="comment-form-button" type="submit" onChange={(event) => setCommentText(event.target.value)}>
                 Add Comment
             </button>
         </form>

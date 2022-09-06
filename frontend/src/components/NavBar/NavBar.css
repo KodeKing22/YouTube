@@ -35,3 +35,9 @@ li {
   cursor: pointer;
   font-size: 2rem;
 }
+.userhomepage {
+  display: flex;
+  font-size: 1.25rem;
+  width:500px;
+  margin: 0 auto;
+}
